@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Book Details</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <nav>
+        <!-- Your navbar code here -->
+    </nav>
+
+    <div class="book-details-container" id="book-details-container">
+        <!-- The book details will be loaded here via JavaScript -->
+    </div>
+    <main>
+        <section id="book-details">
+            <!-- Book details will be dynamically populated here -->
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const queryString = window.location.search;
+            const urlParams = new URLSearchParams(queryString);
+            const bookId = urlParams.get('id');
+
+            if (bookId) {
+                fetchBookDetails(bookId);
+            }
+        });
+
+        function fetchBookDetails(bookId) {
+            axios.get(`https://gutendex.com/books/${bookId}`)
+                .then(response => {
+                    const book = response.data;
+                    const bookDetails = document.getElementById('book-details');
+                    bookDetails.innerHTML = `
+                        <h2>${book.title}</h2>
+                        <img src="${book.formats['image/jpeg']}" alt="${book.title}">
+                        <p><strong>Author:</strong> ${book.authors.map(author => author.name).join(', ')}</p>
+                        <p><strong>Genres:</strong> ${book.subjects.join(', ')}</p>
+                        <p><strong>ID:</strong> ${book.id}</p>
+                        <p><strong>Description:</strong> This is a dummy description for the book.</p>
+                        <span class="wishlist-icon ${wishlist.includes(book.id) ? 'liked' : ''}" onclick="toggleWishlist(${book.id})">❤️</span>
+                    `;
+                })
+                .catch(error => console.error("Error fetching book details:", error));
+        }
+    </script>
+
+    <script src="axios.min.js"></script>
+    <script src="book-details.js"></script>
+</body>
+
+</html>

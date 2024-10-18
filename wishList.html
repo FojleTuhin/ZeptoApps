@@ -1,0 +1,60 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Wishlist</title>
+    <link rel="stylesheet" href="css/Style.css">
+</head>
+<body>
+    <nav>
+        <div class="logo">BookFinder</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <h2>Your Wishlist</h2>
+        <section id="wishlist-books" class="book-list">
+            <!-- Wishlisted books will be dynamically populated here -->
+        </section>
+    </main>
+
+    <script src="js/script.js"></script>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            displayWishlistBooks();
+        });
+
+        function displayWishlistBooks() {
+            const bookList = document.getElementById('wishlist-books');
+            const wishlist = JSON.parse(localStorage.getItem('wishlist')) || [];
+            if (wishlist.length === 0) {
+                bookList.innerHTML = '<p>No books in your wishlist!</p>';
+                return;
+            }
+            
+            wishlist.forEach(bookId => {
+                // Fetch the individual book data from API based on stored bookId
+                axios.get(`https://gutendex.com/books/${bookId}`)
+                    .then(response => {
+                        const book = response.data;
+                        const bookEl = document.createElement('div');
+                        bookEl.classList.add('book');
+                        bookEl.innerHTML = `
+                            <img src="${book.formats['image/jpeg']}" alt="${book.title}">
+                            <h3>${book.title}</h3>
+                            <p>by ${book.authors.map(author => author.name).join(', ')}</p>
+                            <a href="book.html?id=${book.id}">View Details</a>
+                            <span class="wishlist-icon liked" onclick="toggleWishlist(${book.id})">❤️</span>
+                        `;
+                        bookList.appendChild(bookEl);
+                    })
+                    .catch(error => console.error("Error fetching wishlist book:", error));
+            });
+        }
+    </script>
+</body>
+</html>
