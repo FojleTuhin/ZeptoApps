@@ -42,9 +42,9 @@ nav ul li a {
     font-size: 16px;
 }
 
-.book-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+#book-list {
+    display: flex;
+    flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
 }
@@ -54,6 +54,8 @@ nav ul li a {
     padding: 15px;
     border-radius: 5px;
     text-align: center;
+    width: 300px;
+    height: 370px;
     position: relative;
 }
 
@@ -67,7 +69,7 @@ nav ul li a {
     margin: 10px 0;
 }
 
-.wishlist-icon {
+.book .wishlist-icon {
     position: absolute;
     top: 10px;
     right: 10px;
@@ -87,8 +89,38 @@ button {
     cursor: pointer;
 }
 
-@media (max-width: 600px) {
-    .book-list {
-        grid-template-columns: repeat(auto-fill, minmax(150px, 1fr));
-    }
+
+/* Loading spinner style */
+.loading {
+    text-align: center;
+    margin-top: 50px;
+    font-size: 1.5rem;
+    color: #333;
 }
+
+.loading p {
+    display: inline-block;
+    padding: 10px 20px;
+    border-radius: 4px;
+    background-color: #f3f3f3;
+    border: 1px solid #ddd;
+}
+
+/* Centered spinner */
+.loading:after {
+    content: '';
+    display: block;
+    border: 5px solid #f3f3f3;
+    border-top: 5px solid #333;
+    border-radius: 50%;
+    width: 50px;
+    height: 50px;
+    animation: spin 1s linear infinite;
+    margin: 10px auto;
+}
+
+@keyframes spin {
+    0% { transform: rotate(0deg); }
+    100% { transform: rotate(360deg); }
+}
+

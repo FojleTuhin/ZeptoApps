@@ -1,11 +1,15 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wishlist</title>
     <link rel="stylesheet" href="css/Style.css">
+    <!-- Include Axios before your custom script -->
+    <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
+
 <body>
     <nav>
         <div class="logo">BookFinder</div>
@@ -22,6 +26,7 @@
         </section>
     </main>
 
+    <!-- Now include your custom script -->
     <script src="js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
@@ -35,7 +40,7 @@
                 bookList.innerHTML = '<p>No books in your wishlist!</p>';
                 return;
             }
-            
+
             wishlist.forEach(bookId => {
                 // Fetch the individual book data from API based on stored bookId
                 axios.get(`https://gutendex.com/books/${bookId}`)
