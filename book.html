@@ -5,37 +5,31 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Book Details</title>
-    <link rel="stylesheet" href="style.css">
+    <link rel="stylesheet" href="css/Style.css">
 </head>
 
 <body>
     <nav>
-        <!-- Your navbar code here -->
+        <div class="logo">BookFinder</div>
+        <ul>
+            <li><a href="index.html">Home</a></li>
+            <li><a href="wishlist.html">Wishlist</a></li>
+        </ul>
     </nav>
 
     <div class="loading" id="loading" style="display: none;">
         <p>Loading...</p>
     </div>
-    <div class="book-details-container" id="book-details-container">
-        <!-- The book details will be loaded here via JavaScript -->
-    </div>
-    <main>
-        <section id="book-details">
-            <!-- Book details will be dynamically populated here -->
-        </section>
-    </main>
+    <div class="book-details-container" id="book-details-container"></div>
 
-    <script src="js/script.js"></script>
     <script>
-        // Get the book ID from the query parameters
         const urlParams = new URLSearchParams(window.location.search);
         const bookId = urlParams.get('id');
 
- 
-
-        // Fetch and display the book details
         function fetchBookDetails(bookId) {
-            // Show loading indicator before making the request
+            const loadingElement = document.getElementById('loading');
+            const bookDetailsContainer = document.getElementById('book-details-container');
+
             loadingElement.style.display = 'block';
             bookDetailsContainer.style.display = 'none';
 
@@ -43,38 +37,29 @@
                 .then(response => {
                     const book = response.data;
 
-                    // Hide loading indicator and show book details
                     loadingElement.style.display = 'none';
                     bookDetailsContainer.style.display = 'block';
 
-                    const bookDetailsContainer= document.getElementById('book-details')
-                    // Display book details in the container
                     bookDetailsContainer.innerHTML = `
-                <h1>${book.title}</h1>
-                <img src="${book.cover_image}" alt="${book.title}">
-                <p><strong>Author:</strong> ${book.authors.map(author => author.name).join(', ')}</p>
-                <p><strong>Genre:</strong> ${book.subjects.join(', ')}</p>
-                <p><strong>ID:</strong> ${book.id}</p>
-                <p>${book.description || 'No description available.'}</p>
-            `;
+                        <h1>${book.title}</h1>
+                        <img src="${book.formats['image/jpeg']}" alt="${book.title}">
+                        <p><strong>Author:</strong> ${book.authors.map(author => author.name).join(', ')}</p>
+                        <p><strong>Genre:</strong> ${book.subjects.join(', ')}</p>
+                        <p><strong>ID:</strong> ${book.id}</p>
+                        <p>${book.description || 'No description available.'}</p>
+                    `;
                 })
                 .catch(error => {
                     console.error("Error fetching book details:", error);
                     loadingElement.style.display = 'none';
-                    bookDetailsContainer.style.display = 'block';
                     bookDetailsContainer.innerHTML = '<p>Error loading book details.</p>';
                 });
         }
 
-        // Fetch the book details when the page loads
         fetchBookDetails(bookId);
-
     </script>
 
-
-<script src="js/script.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
-
 </body>
 
 </html>

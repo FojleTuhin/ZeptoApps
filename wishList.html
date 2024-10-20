@@ -6,7 +6,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Wishlist</title>
     <link rel="stylesheet" href="css/Style.css">
-    <!-- Include Axios before your custom script -->
     <script src="https://cdn.jsdelivr.net/npm/axios/dist/axios.min.js"></script>
 </head>
 
@@ -22,12 +21,9 @@
     <main>
         <h2>Your Wishlist</h2>
         <section id="wishlist-books" class="book-list">
-            <!-- Wishlisted books will be dynamically populated here -->
         </section>
     </main>
 
-    <!-- Now include your custom script -->
-    <script src="js/script.js"></script>
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             displayWishlistBooks();
@@ -42,7 +38,6 @@
             }
 
             wishlist.forEach(bookId => {
-                // Fetch the individual book data from API based on stored bookId
                 axios.get(`https://gutendex.com/books/${bookId}`)
                     .then(response => {
                         const book = response.data;
@@ -62,4 +57,5 @@
         }
     </script>
 </body>
+
 </html>

@@ -1,4 +1,3 @@
-/* General Styles */
 body {
     font-family: Arial, sans-serif;
     margin: 0;
@@ -47,6 +46,7 @@ nav ul li a {
     flex-wrap: wrap;
     gap: 20px;
     padding: 20px;
+    margin: auto;
 }
 
 .book {
@@ -89,8 +89,6 @@ button {
     cursor: pointer;
 }
 
-
-/* Loading spinner style */
 .loading {
     text-align: center;
     margin-top: 50px;
@@ -106,7 +104,6 @@ button {
     border: 1px solid #ddd;
 }
 
-/* Centered spinner */
 .loading:after {
     content: '';
     display: block;
@@ -123,4 +120,3 @@ button {
     0% { transform: rotate(0deg); }
     100% { transform: rotate(360deg); }
 }
-
